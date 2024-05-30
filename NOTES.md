@@ -50,3 +50,4 @@ Frameworks:
     - High Bias means R^2 values of training or validation are off
     - High Variance means the difference between the R^2 values of training and validation is high
 - General rule: More **complex models** -> Lower Bias and More Variance
+- ![train-test trend graph](tttgraph.png)

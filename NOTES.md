@@ -52,4 +52,4 @@ Frameworks:
 - General rule: More **complex models** -> Lower Bias and More Variance
 - Low variance algorithms: Linear Regression, LDA, Logistic Regression
 - High variance algorithms: Decision Trees, kNN, SVM
-- ![train-test trend graph](tttgraph.png) ![bias-variance trend graph](bvtgraph.png)
+- ![train-test trend graph](tttgraph.png =300x200) ![bias-variance trend graph](bvtgraph.png =300x200)

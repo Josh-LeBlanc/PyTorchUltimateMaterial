@@ -52,8 +52,11 @@ Frameworks:
 - General rule: More **complex models** -> Lower Bias and More Variance
 - Low variance algorithms: Linear Regression, LDA, Logistic Regression
 - High variance algorithms: Decision Trees, kNN, SVM
-- <img src="tttgraph.png" width="300" height="260" alt="train-test trend graph"> <img src="bvtgraph.png" width="300" height="200" alt="bias-variance graph">
+- <img src="tttgraph.png" width="300" height="260" alt="train-test trend graph"> <img src="bvtgraph.png" width="300" height="260" alt="bias-variance graph">
 - Resampling: e.g. train 5 models using 80/20 train/test splits so that all data is used for validation
 
 ### 5. Neural Network from Scratch
-- <a href="015_NeuralNetworkFromScratch/nn_scratch_start.py"></a>
+- working on files 015_NeuralNetworkFromScratch/*
+- StandardScaler from sklearn.preprocessing to normalize
+    - X_train_scale = scaler.fit_transform(X_train)
+    - X_test_scale = scaler.transform(X_test)

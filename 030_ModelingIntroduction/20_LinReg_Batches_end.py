@@ -103,6 +103,7 @@ y = [i[0] for i in y_true.data.numpy()]
 sns.scatterplot(x=X_list, y=y)
 sns.lineplot(x=X_list, y=y_pred, color='red')
 # %%
+!pip install hiddenlayer
 import hiddenlayer as hl
 graph = hl.build_graph(model, X)
 # %%

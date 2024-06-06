@@ -29,7 +29,7 @@ X_test_scale = scaler.transform(X_test)
 #%% network class
 class NeuralNetworkFromScratch:
     def __init__(self, LR, X_train, y_train, X_test, y_test):
-        self.w = np.random.randn(X_train_scale[1])
+        self.w = np.random.randn(X_train_scale.shape[1])
         self.b = np.random.randn()
         self.LR = LR
         self.X_train = X_train
@@ -56,7 +56,7 @@ class NeuralNetworkFromScratch:
         # calc gradients
         hidden_1 = np.dot(X, self.w) + self.b
         y_pred = self.forward(X)
-        dl_dpred = 2 * (y_pred - y_true)
+        dL_dpred = 2 * (y_pred - y_true)
         dpred_dhidden1 = self.dactivation(hidden_1)
         dhidden1_db = 1
         dhidden1_dw = X
@@ -100,16 +100,34 @@ class NeuralNetworkFromScratch:
         return "training successful"
     
 #%% Hyper parameters
+LR = .1
+ITERATIONS = 1000
 
 #%% model instance and training
+nn = NeuralNetworkFromScratch(LR=LR, X_train=X_train_scale, y_train=y_train, X_test=X_test_scale, y_test=y_test)
+nn.train(ITERATIONS=ITERATIONS)
 
 # %% check losses
+sns.lineplot(x = list(range(len(nn.L_test))), y = nn.L_test)
 
 # %% iterate over test data
+total = X_test_scale.shape[0]
+correct = 0
+y_preds = []
+for i in range(total):
+    y_true = y_test[i]
+    y_pred = np.round(nn.forward(X_test_scale[i]))
+    y_preds.append(y_pred)
+    correct += 1 if y_true == y_pred else 0
 
 # %% Calculate Accuracy
+correct / total
 
 # %% Baseline Classifier
+from collections import Counter
+Counter(y_test)
 
 # %% Confusion Matrix
+confusion_matrix(y_true=y_test, y_pred=y_preds)
 
+# %%

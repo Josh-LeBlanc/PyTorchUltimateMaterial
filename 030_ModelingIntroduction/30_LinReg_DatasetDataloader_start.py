@@ -1,4 +1,5 @@
 #%% packages
+from torch.utils.data import Dataset, DataLoader
 import graphlib
 import numpy as np
 import pandas as pd
@@ -24,6 +25,22 @@ X = torch.from_numpy(X_np)
 y_true = torch.from_numpy(y_np)
 
 #%%
+class LinearRegressionDataset(Dataset):
+    # for the dataset class to work with the DataLoader, these three
+    # functions muse be implemented
+    def __init__(self, X, y):
+        self.X = X
+        self.y = y
+
+    def __len__(self):
+        return len(self.X)
+    
+    def __getitem__(self, idx):
+        return self.X[idx], self.y[idx]
+
+# has lots of sampling and randomizing methods
+train_loader = DataLoader(dataset=LinearRegressionDataset(X_np, y_np), batch_size=2)
+
 class LinearRegressionTorch(nn.Module):
     def __init__(self, input_size, output_size):
         super(LinearRegressionTorch, self).__init__()
@@ -46,21 +63,25 @@ learning_rate = 0.02
 # best 0.02
 optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
 
+#%% dataloader enumeration
+for i, (X, y) in enumerate(train_loader):
+    print(X)
+    print(y)
 #%% perform training
 losses = []
 slope, bias = [], []
 NUM_EPOCHS = 1000
 BATCH_SIZE = 2
 for epoch in range(NUM_EPOCHS):
-    for i in range(0, X.shape[0], BATCH_SIZE):
+    for i, (X, y) in enumerate(train_loader):
         # optimization
         optimizer.zero_grad()
 
         # forward pass
-        y_pred = model(X[i:i+BATCH_SIZE])
+        y_pred = model(X)
 
         # compute loss
-        loss = loss_fun(y_pred, y_true[i:i+BATCH_SIZE])
+        loss = loss_fun(y_pred, y)
         losses.append(loss.item())
 
         # backprop

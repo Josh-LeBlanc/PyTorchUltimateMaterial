@@ -60,3 +60,6 @@ Frameworks:
 - StandardScaler from sklearn.preprocessing to normalize
     - X_train_scale = scaler.fit_transform(X_train)
     - X_test_scale = scaler.transform(X_test)
+
+### 6. Tensors
+- gradients are calculated automatically

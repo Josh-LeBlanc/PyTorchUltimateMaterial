@@ -1,5 +1,7 @@
 # PytorchUltimate
 
+### using this this repo along with the Oreilly course
+
 This repo holds material for the Udemy course _**PyTorch Ultimate: From Basics to Cutting-Edge**_. You can find the course under [this link](https://www.udemy.com/course/pytorch-ultimate/).
 
 ## Environment Installation from yml file

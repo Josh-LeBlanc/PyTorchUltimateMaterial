@@ -30,6 +30,7 @@ train_loader = core.DataLoader(train_dataset, batch_size=2, shuffle=False)
 test_loader = core.DataLoader(test_dataset, batch_size=2, shuffle=False)
 # %% initialize model
 model = core.Model(trained_labels)
+model.get_internal_model()
 # %% perform the training
 losses = model.fit(train_loader, test_dataset, epochs=2, verbose=True)
 
@@ -65,3 +66,5 @@ for j, data in enumerate(train_loader):
     print(j)
     image, label = data
     print(label)
+
+# %%

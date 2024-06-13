@@ -15,8 +15,8 @@ data_waveform.size()
 # %% Plot Waveform
 plot_waveform(data_waveform, sample_rate=sr)
 #%% calculate spectrogram
-spectogram = torchaudio.transforms.Spectrogram()(data_waveform)
-spectogram.size()
+spectrogram = torchaudio.transforms.Spectrogram()(data_waveform)
+spectrogram.size()
 
 # %% Plot Spectrogram
 plot_specgram(waveform=data_waveform, sample_rate=sr)

@@ -1,4 +1,5 @@
 #%% package import
+!mkdir yolov7
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -23,12 +24,12 @@ def create_folder(path):
     if not os.path.exists(path):
         os.makedirs(path)
 
-create_folder('yolov7\\train\\images')
-create_folder('yolov7\\train\\labels')
-create_folder('yolov7\\val\\images')
-create_folder('yolov7\\val\\labels')
-create_folder('yolov7\\test\\images')
-create_folder('yolov7\\test\\labels')
+create_folder('yolov7/train/images')
+create_folder('yolov7/train/labels')
+create_folder('yolov7/val/images')
+create_folder('yolov7/val/labels')
+create_folder('yolov7/test/images')
+create_folder('yolov7/test/labels')
 
 #%% get all image files
 img_folder = 'images'
@@ -37,11 +38,11 @@ pos = 0
 for f in files:
         source_img = os.path.join(img_folder, f)
         if pos < 700:
-            dest_folder = 'yolov7\\train'
+            dest_folder = 'yolov7/train'
         elif (pos >= 700 and pos < 800):
-            dest_folder = 'yolov7\\val'
+            dest_folder = 'yolov7/val'
         else:
-            dest_folder = 'yolov7\\test'
+            dest_folder = 'yolov7/test'
         destination_img = os.path.join(dest_folder,'images', f)
         shutil.copy(source_img, destination_img)
 

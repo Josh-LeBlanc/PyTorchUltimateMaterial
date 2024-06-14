@@ -40,17 +40,22 @@ image_grid = torchvision.utils.make_grid(X_train[:16, :, :, :], scale_each= True
 imshow(image_grid) 
 #%%
 # TODO: download and instantiate pre-trained network
-model = models.densenet121(pretrained = True)
+model = models.densenet121(pretrained=True) # pretrained arg is depracated
+# model = models.densenet121(weights=models.DenseNet121_Weights
+model
+
 #%% keep feature layers
 # TODO: freeze all layers
-for params in model.parameters():
-    params.requires_grad = False
+for param in model.parameters():
+    param.required_grad = False
+
 #%% overwrite classifier of model
 # TODO: overwrite classifier of model
 model.classifier = nn.Sequential(OrderedDict([
-    ('fc1',nn.Linear(1024,1)),
-    ('Output',nn.Sigmoid())
+    ('fc1', nn.Linear(1024, 1)),
+    ('Output', nn.Sigmoid())
 ]))
+
 
 # %% train the model
 opt = optim.Adam(model.classifier.parameters()) 
@@ -93,7 +98,7 @@ sns.lineplot(x = range(len(train_losses)), y = train_losses)
 # %%
 fig = plt.figure(figsize=(10, 10)) 
 class_labels = {0:'cat', 1:'dog'} 
-X_test, y_test = iter(test_loader).next() 
+X_test, y_test = next(iter(test_loader))
 with torch.no_grad():
     y_pred = model(X_test) 
     y_pred = y_pred.round()

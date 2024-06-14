@@ -23,6 +23,7 @@ print(content_img.shape)
 style_img = Image.open('The_Great_Wave_off_Kanagawa.jpg').convert('RGB')
 style_img = preprocess_steps(style_img)
 # style_img = style_img.transpose(0, 2)
+print(style_img.shape)
 style_img = torch.unsqueeze(style_img, 0)
 print(style_img.shape)
 

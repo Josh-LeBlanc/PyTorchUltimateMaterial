@@ -79,6 +79,7 @@ NUM_EPOCHS = 20
 for epoch in range(NUM_EPOCHS):
     for j, (X, y) in enumerate(train_loader):
         optimizer.zero_grad()
+        print(X.shape)
         y_pred = model(X.view(-1, 10, 1))
         loss = loss_fun(y_pred, y.unsqueeze(1))
         loss.backward()

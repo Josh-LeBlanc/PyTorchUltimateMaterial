@@ -16,7 +16,7 @@ print(f'Number of Entries: {len(data)}')
 data.head()
 
 # %%
-sns.lineplot(data.index, data.passengers, data=data)
+sns.lineplot((data.index, data.passengers))
 # %%
 # Convert passenter data to float32 for PyTorch
 num_points = len(data)
@@ -33,6 +33,22 @@ Xy_scaled = scaler.fit_transform(Xy.reshape(-1, 1))
 #%% train/test split
 
 # TODO: create train and test set (keep last 12 months for testing, everything else for training)
+X_restruct = []
+y_restruct = []
+
+for i in range(num_points - 10):
+    X_restruct.append(Xy_scaled[i:i+10])
+    y_restruct.append(i+10)
+
+X_restruct = np.array(X_restruct)
+y_restruct = np.array(y_restruct)
+
+X_test = X_restruct[len(X_restruct) - 12:]
+X_train = X_restruct[:len(X_restruct) - 12]
+y_test = y_restruct[len(X_restruct) - 12:]
+y_train = y_restruct[:len(X_restruct) - 12]
+y_test = y_test.reshape(-1, 1)
+y_train = y_train.reshape(-1, 1)
 
 # TODO: restructure the data to match the following shapes
 # X_train shape: (122, 10, 1)

@@ -38,7 +38,7 @@ y_restruct = []
 
 for i in range(num_points - 10):
     X_restruct.append(Xy_scaled[i:i+10])
-    y_restruct.append(i+10)
+    y_restruct.append(Xy_scaled[i+10])
 
 X_restruct = np.array(X_restruct)
 y_restruct = np.array(y_restruct)
@@ -59,9 +59,34 @@ y_train = y_train.reshape(-1, 1)
 
 # %% 
 #  TODO: create dataset and dataloader
+class FlightDataset(Dataset):
+    def __init__(self, X, y):
+        self.X = torch.tensor(X, dtype=torch.float32)
+        self.y = torch.tensor(y, dtype=torch.float32)
+    
+    def __len__(self):
+        return len(self.X)
+    
+    def __getitem__(self, x):
+        return self.X[x], self.y[x]
+    
+train_loader = DataLoader(FlightDataset(X_train, y_train), batch_size=2)
+test_loader = DataLoader(FlightDataset(X_test, y_test), batch_size=len(y_test))
 
 # %%
 # TODO: set up the model class
+class FlightModel(nn.Module):
+    def __init__(self, input_size=1, output_size=1):
+        super(FlightModel, self).__init__()
+        self.hidden_size = 50
+        self.lstm = nn.LSTM(input_size, hidden_size=self.hidden_size, num_layers=1, batch_first=True)
+        self.fc1 = nn.Linear(in_features=self.hidden_size, out_features=output_size)
+
+    def forward(self, x):
+        x, _ = self.lstm(x)
+        x = x[:, -1, :]
+        x = self.fc1(torch.relu(x))
+        return x
 
 # %% Model, Loss and Optimizer
 model = FlightModel()
@@ -72,6 +97,17 @@ NUM_EPOCHS = 200
 
 #%% Train
 # TODO: create the training loop
+for epoch in range(NUM_EPOCHS):
+    for j, data in enumerate(train_loader):
+        X, y = data
+        optimizer.zero_grad()
+        y_pred = model.forward(X)
+        loss = loss_fun(y_pred, y)
+        loss.backward()
+        optimizer.step()
+
+    if epoch % 10 == 0:
+        print(f"Epoch: {epoch}, Loss: {loss.data}")
 
 
 # %% Create Predictions
@@ -86,3 +122,5 @@ sns.lineplot(x=x_act, y=y_pred.squeeze(), label = 'Predicted',color='red')
 
 # %% correlation plot
 sns.scatterplot(x=y_act, y=y_pred.squeeze(), label = 'Predicted',color='red', alpha=0.5)
+
+# %%

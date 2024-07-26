@@ -25,10 +25,53 @@ dataloader = DataLoader(dataset, batch_size=8, shuffle=True)
 LATENT_DIMS = 128
 
 # TODO: Implement Encoder class
+class Encoder(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(1, 6, 3) # channels going from 1 to 6, kernel size of 3. out: BS, 6, 62, 62
+        self.conv2 = nn.Conv2d(6, 16, 3) # you get it. out: BS, 16, 60, 60
+        self.relu = nn.ReLU()
+        self.flatten = nn.Flatten()
+        self.fc = nn.Linear(16 * 60 * 60, LATENT_DIMS)
+
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.relu(x)
+        x = self.conv2(x)
+        x = self.relu(x)
+        x = self.flatten(x)
+        x = self.fc(x)
+        return x
 
 # TODO: Implement Decoder class
+class Decoder(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc = nn.Linear(LATENT_DIMS, 16 * 60 * 60)
+        self.conv2 = nn.ConvTranspose2d(16, 6, 3) # you get it. out: BS, 6, 62, 62
+        self.conv1 = nn.ConvTranspose2d(6, 1, 3) # out: BS, 1, 64, 64
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        x = self.fc(x)
+        x = x.view(-1, 16, 60, 60)
+        x = self.conv2(x)
+        x = self.relu(x)
+        x = self.conv1(x)
+        x = self.relu(x)
+        return x
 
 # TODO: Implement Autoencoder class
+class Autoencoder(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.encoder = Encoder()
+        self.decoder = Decoder()
+
+    def forward(self, x):
+        x = self.encoder(x)
+        x = self.decoder(x)
+        return x
 
 
 # Test it
@@ -65,7 +108,7 @@ def show_image(img):
     npimg = img.numpy()
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
 
-images, labels = iter(dataloader).next()
+images, labels = next(iter(dataloader))
 print('original')
 plt.rcParams["figure.figsize"] = (20,3)
 show_image(torchvision.utils.make_grid(images))

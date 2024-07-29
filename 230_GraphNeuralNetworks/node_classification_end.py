@@ -49,6 +49,7 @@ class GAT(torch.nn.Module):
         x = self.conv2(x, edge_index)
         return x
 
+# model = GCN(num_hidden=16, num_features=dataset.num_features, num_classes=dataset.num_classes)
 model = GAT(num_hidden=16, num_features=dataset.num_features, num_classes=dataset.num_classes)
 optimizer = torch.optim.Adam(model.parameters())
 criterion = torch.nn.CrossEntropyLoss()
@@ -64,7 +65,8 @@ for epoch in range(1000):
     loss_lst.append(loss.item())
     loss.backward()
     optimizer.step()
-    print(f'Epoch: {epoch}, Loss: {loss}')
+    if epoch % 100 == 0:
+        print(f'Epoch: {epoch}, Loss: {loss}')
 
 #%% Train Loss
 sns.lineplot(x=list(range(len(loss_lst))), y=loss_lst)

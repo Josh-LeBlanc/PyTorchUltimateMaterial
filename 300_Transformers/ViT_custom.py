@@ -83,7 +83,7 @@ classifier.predict(img)
 # %% 
 import glob
 test_files = [f for f in glob.glob("./test/**/**", recursive=True) if os.path.isfile(f)]
-# %%
+# %% testing:
 for i in range(len(test_files)):
 	print(f"{test_files[i]}")
 	print(f"predicted: {classifier.predict(test_files[i])}")

@@ -91,6 +91,7 @@ class SesemiNet(nn.Module):
         return x
     
     # TODO: update forward pass
+    # he already did this for some reason
     def forward(self, x_supervised, x_selfsupervised):
         x_supervised = self.backbone(x_supervised)
         x_supervised = self.fc_out_super(x_supervised)

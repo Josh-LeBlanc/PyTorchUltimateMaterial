@@ -27,8 +27,9 @@ def predict():
         return 'Please use POST method'
     if request.method == 'POST':
         data = request.data.decode('utf-8')
-        dict_data = json.loads(data.replace("'", "\""))
-        X = torch.tensor([dict_data["data"]])
+        X = torch.tensor(eval(data)['data'])
+        # dict_data = json.loads(data.replace("'", "\""))
+        # X = torch.tensor([dict_data["data"]])
         y_test_hat_softmax = model(X)
         y_test_hat = torch.max(y_test_hat_softmax, 1)
         y_test_cls = y_test_hat.indices.cpu().detach().numpy()[0]
@@ -43,3 +44,4 @@ def predict():
 if __name__ == '__main__':
     app.run()
 # %%
+# just sending a POST request with this body: {'data': [[.5, .2, 1.2, 3.4]]}

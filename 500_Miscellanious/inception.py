@@ -1,6 +1,6 @@
 #%% packages
 import torch
-import torch.nn as nn
+from torch import nn
 
 #%%
 class ImageClassficationInception(nn.Module):
@@ -48,6 +48,7 @@ class ImageClassficationInception(nn.Module):
         out5x5 = self.branch5x5(x)
         out_pool = self.branch_pool(x)
         out = torch.cat((out1x1, out3x3, out5x5, out_pool), dim = 1)
+        print(out.shape, out5x5.shape)
         out = torch.flatten(out, 1)
         out = nn.Linear(out.shape[1], 1)(out)
         out = nn.Sigmoid()(out)
@@ -58,4 +59,4 @@ input = torch.rand([4, 1, 32, 32]) # [BS, Color, H,W ]
 model = ImageClassficationInception(in_channels=1, out_channels=128)
 model(input).shape
         
-# %%
+# %% done

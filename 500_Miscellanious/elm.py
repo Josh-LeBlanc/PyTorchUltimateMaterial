@@ -15,7 +15,6 @@ X, y = make_blobs(n_samples=10000, n_features=2, centers=5, random_state=1)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
 
 # %% visualize data
-sns.scatterplot(X_train[:, 0], X_train[:, 1], hue=y_train)
 # %% Hyperparams
 INPUT_SIZE = X_train.shape[1]
 HIDDEN_SIZE = 1000
@@ -58,4 +57,4 @@ print(f'Accuracy for {HIDDEN_SIZE} hidden nodes: {accuracy}')
 cnt = Counter(y_test)
 #  Baseline Accuracy
 np.max(list(cnt.values())) / total
-# %%
+# %% done

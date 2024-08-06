@@ -22,4 +22,5 @@ def get_closest_words_from_word(word, max_n=5):
     return [item[0] for item in dist_sort_filt]
 
 get_closest_words_from_word(word='chess', max_n=10)
+# just followed along with end file
 

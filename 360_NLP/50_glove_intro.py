@@ -40,6 +40,8 @@ def get_word_analogy(word1, word2, word3, max_n=5):
     analogy = get_closest_words_from_embedding(word4_emb)
     return analogy
 
-get_word_analogy(word1='sister', word2='brother', word3='nephew')
+get_word_analogy(word1='sister', word2='brother', word3='prince')
     
     
+
+# %% done

@@ -32,4 +32,4 @@ def closest_description(desc):
     return data[['text', 'sentiment']]
 # %%
 closest_description('this is amazing')
-# %%
+# %% done

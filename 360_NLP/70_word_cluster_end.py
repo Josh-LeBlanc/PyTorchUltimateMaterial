@@ -60,3 +60,5 @@ df_word_cloud['x'] = X_tsne[:, 0]
 df_word_cloud['y'] = X_tsne[:, 1]
 
 ggplot(data=df_word_cloud.sample(25)) + aes(x = 'x', y='y', label = 'word', color = 'category') + geom_text() + labs(title='GloVe Word Embeddings and Categories')
+
+# %% done

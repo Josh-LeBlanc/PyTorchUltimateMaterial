@@ -24,4 +24,4 @@ pd.DataFrame(res[1]).plot.bar(x='labels', y='scores', rot=0, title="The Lord of 
 # %% flag multiple labels
 classifier(documents[0], candidate_labels = candidate_labels, multi_class=True)
  
-# %%
+# %% done

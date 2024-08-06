@@ -12,6 +12,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 
+!pip install sentence_transformers
 from sentence_transformers import SentenceTransformer
 
 #%% import data
@@ -38,10 +39,10 @@ embeddings = emb_model.encode(sentences)
 print(embeddings.squeeze().shape)
 
 #%% prepare X and y
-# X = emb_model.encode(df['text'].values)
+X = emb_model.encode(df['text'].values)
 
-# with open("data/tweets_X.pkl", "wb") as output_file:
-#     pickle.dump(X, output_file)
+with open("data/tweets_X.pkl", "wb") as output_file:
+    pickle.dump(X, output_file)
 
 with open("data/tweets_X.pkl", "rb") as input_file:
     X = pickle.load(input_file)
@@ -129,4 +130,4 @@ f"The accuracy of the model is {np.round(acc, 3)*100}%."
 # %%
 most_common_cnt = Counter(y_test).most_common()[0][1]
 print(f"Naive Classifier: {np.round(most_common_cnt / len(y_test) * 100, 1)} %")
-# %%
+# %% done
